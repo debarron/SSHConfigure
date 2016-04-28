@@ -1,4 +1,7 @@
 #!/bin/bash
+# Created by: daniel ernesto lopez barron
+# University of Missouri Kansas City
+# April 28 2016
 
 echo " "
 echo ">> Configuring the master node STARTS"
@@ -21,21 +24,18 @@ echo " "
 echo ">> Copying the scripts to the nodes STARTS"
 for node in `seq $startNode $lastNode`;
 do
-
 	sshCommand="scp ./Step1.sh $nodeName-$node:~"
-	# scp ./Step1.sh "$nodeName-$node:~"
 	eval $sshCommand
 done
 echo ">> Copying the scripts to the nodes DONE"
 echo " "
 
 
-
-# echo ">> Executing the script in the nodes STARTS"
-# echo " "
-# for node in `seq $startNode $lastNode`;
-# do
-# 	ssh -t $nodeName-$node ./Step1.sh
-# done
-# echo ">> Executing the script in the nodes DONE"
-# echo " "
+echo " "
+echo ">> Executing the script in the nodes STARTS"
+for node in `seq $startNode $lastNode`;
+do
+	ssh -t $nodeName-$node ./Step1.sh
+done
+echo ">> Executing the script in the nodes DONE"
+echo " "
