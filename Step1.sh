@@ -1,4 +1,15 @@
 #!/bin/bash
+# Created by: daniel ernesto lopez barron
+# University of Missouri Kansas City
+# April 28 2016
+
+# Change this parameters
+user=dl544
+password="daniel"
+lastNode=4
+nodeName="cp"
+server="$user@nm"
+
 echo " "
 echo ">> Script to initialize a node"
 echo "##----------------------------"
@@ -12,13 +23,6 @@ echo " "
 echo ">> Generating keys STARTS"
 ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys 
 # ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@nm && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-1 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-2 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-3
-
-# Change this parameters
-user=dl544
-password="daniel"
-lastNode=4
-nodeName="cp"
-server="$user@nm"
 
 # Don't touch this parameters
 passCommand="sudo sshpass -p \"$password\""
