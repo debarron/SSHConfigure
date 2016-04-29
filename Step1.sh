@@ -3,7 +3,7 @@
 # University of Missouri Kansas City
 # April 28 2016
 
-# Change this parameters
+# PARAMS
 user=dl544
 password="daniel"
 lastNode=4

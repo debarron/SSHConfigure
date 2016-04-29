@@ -3,18 +3,19 @@
 # University of Missouri Kansas City
 # April 28 2016
 
+# PARAMS
+startNode=1
+lastNode=8
+user=dl544
+nodeName="cp"
+password="daniel"
+
 echo " "
 echo ">> Configuring the master node STARTS"
 ./Step1.sh
 echo ">>  Configuring the master node DONE "
 echo " "
 
-
-startNode=1
-lastNode=8
-user=dl544
-nodeName="cp"
-password="daniel"
 server="$user@nm"
 passCommand="sudo sshpass -p \"$password\""
 optHostCheck="-o StrictHostKeyChecking=no"
