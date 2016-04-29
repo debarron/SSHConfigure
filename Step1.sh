@@ -4,6 +4,8 @@
 # April 28 2016
 
 # PARAMS
+# TODO dev Remove this features so it can be passed as
+# 		   arguments to the script
 user=dl544
 password="daniel"
 lastNode=4
