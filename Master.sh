@@ -51,6 +51,8 @@ for node in `seq $startNode $lastNode`;
 do
 	cmd="scp ./Step1.sh $nodePrefix$node:~ "
 	sshCommand="$passCommand $cmd $optHostCheck $optKeyy"
+
+	echo $sshCommand
 	eval $sshCommand
 done
 printf "\n>> Copying the scripts to the nodes DONE\n\n"
