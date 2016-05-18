@@ -14,7 +14,7 @@
 
 #UPDATED
 scriptUsage(){
-	echo "USAGE: Master.sh <server> <nodePrefix,start,end> <user,password>"
+	echo "USAGE: Step1.sh <server> <nodePrefix,start,end> <user,password>"
 	echo "	+ server: Indicates the name of the server node (i.e. Hadoop's Namenode)"
 	echo "	+ nodePrefix: Corresponds with the prefix of the cluster's Datanodes"
 	echo "	+ startNode: First datanode, naming must follow a sequential convention"
