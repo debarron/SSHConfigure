@@ -71,7 +71,7 @@ optKey="-i ~/.ssh/id_dsa.pub"
 sshCopy="$passCommand ssh-copy-id $optHostCheck $optKey $server"
 for node in `seq $startNode $lastNode`;
 do
-	server="$user@$nodePrefix-$node"
+	server="$user@$nodePrefix$node"
 	nextNode="&& $passCommand ssh-copy-id $optHostCheck $optKey $server"
 	sshCopy="$sshCopy $nextNode"
 done
