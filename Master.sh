@@ -49,7 +49,7 @@ optKey="-i ~/.ssh/id_dsa.pub"
 printf "\n>> Copying the scripts to the nodes STARTS\n"
 for node in `seq $startNode $lastNode`;
 do
-	cmd="scp ./Step1.sh $nodePrefix$node:~"
+	cmd="scp ./Step1.sh $nodePrefix$node:~ "
 	sshCommand="$passCommand $cmd $optHostCheck $optKeyy"
 	eval $sshCommand
 done
