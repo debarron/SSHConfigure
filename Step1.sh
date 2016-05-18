@@ -41,7 +41,8 @@ sudo apt-get -y update  && sudo apt-get -y install default-jdk ssh rsync sshpass
 printf ">> System update FINISHED\n\n"
 
 printf "\n>> Generating keys STARTS\n"
-ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys 
+echo -e 'y\n'|ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && 
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys 
 # ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@nm && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-1 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-2 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-3
 
 # Don't touch this parameters
