@@ -60,7 +60,7 @@ echo " "
 echo ">> Copying the scripts to the nodes STARTS"
 for node in `seq $startNode $lastNode`;
 do
-	sshCommand="scp ./Step1.sh $nodePrefix$node:~"
+	sshCommand="$passCommand $optHostCheck scp ./Step1.sh $nodePrefix$node:~"
 	eval $sshCommand
 done
 echo ">> Copying the scripts to the nodes DONE"
@@ -71,7 +71,7 @@ echo " "
 echo ">> Executing the script in the nodes STARTS"
 for node in `seq $startNode $lastNode`;
 do
-	ssh -t $nodePrefix$node ./Step1.sh
+	ssh -t $nodePrefix$node ./Step1.sh $serverName "$nodePrefix,$startNode,$lastNode" "$user,$password"
 done
 echo ">> Executing the script in the nodes DONE"
 echo " "
