@@ -28,12 +28,12 @@ scriptUsage(){
 	echo "	With \"nm\" as Namenode and cp-1, cp-2, cp-3 as Datanodes"
 }
 
-
-nodePrefix=`echo $1 | cut -d, -f1`
-startNode=`echo $1 | cut -d, -f2`
-lastNode=`echo $1 | cut -d, -f3`
-user=`echo $2 | cut -d, -f1`
-password=`echo $2 | cut -d, -f2`
+serverName=$1
+nodePrefix=`echo $2 | cut -d, -f1`
+startNode=`echo $2 | cut -d, -f2`
+lastNode=`echo $2 | cut -d, -f3`
+user=`echo $3 | cut -d, -f1`
+password=`echo $3 | cut -d, -f2`
 
 
 printf "\n>> Script to initialize a node\n ##----------------------------\n >> System update STARTS\n"
@@ -50,6 +50,7 @@ optHostCheck="-o StrictHostKeyChecking=no"
 optKey="-i ~/.ssh/id_dsa.pub"
 
 sshCopy="echo \"Starts\" "
+sshCopy="$passCommand ssh-copy-id $optHostCheck $optKey $user@$serverName"
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
