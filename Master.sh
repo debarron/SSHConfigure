@@ -60,8 +60,8 @@ printf "\n>> Copying the scripts to the nodes DONE\n\n"
 printf "\n>> Executing the script in the nodes STARTS\n"
 for node in `seq $startNode $lastNode`;
 do
-	cmd="ssh -t $nodePrefix$node $optHostCheck $optKey ./Step1.sh $nodePrefix,$startNode,$lastNode $user,$password"
-	sshCommand="$passCommand $cmd "
+	cmd="ssh -t $nodePrefix$node ./Step1.sh $nodePrefix,$startNode,$lastNode $user,$password"
+	sshCommand="$passCommand $cmd $optHostCheck $optKey"
 	eval $sshCommand
 done
 printf "\n>> Executing the script in the nodes DONE\n"
