@@ -28,13 +28,7 @@ scriptUsage(){
 	echo "	With \"nm\" as Namenode and cp-1, cp-2, cp-3 as Datanodes"
 }
 
-if [ $# -lt 3 ]
-then
-	scriptUsage
-	exit 1
-fi
-
-if [ $# -gt 3 ]
+if [ $# -ne 2 ]
 then
 	scriptUsage
 	exit 1

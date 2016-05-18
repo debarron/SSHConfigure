@@ -23,17 +23,13 @@ scriptUsage(){
 	echo "	With \"nm\" as Namenode and cp-1, cp-2, cp-3 as Datanodes"
 }
 
-if [ $# -lt 3 ]
+if [ $# -ne 3 ]
 then
 	scriptUsage
 	exit 1
 fi
 
-if [ $# -gt 3 ]
-then
-	scriptUsage
-	exit 1
-fi
+
 
 # SET PARAMETERS
 nodePrefix=`echo $1 | cut -d, -f1`
