@@ -54,7 +54,7 @@ passCommand="sudo sshpass -p \"$password\""
 optHostCheck="-o StrictHostKeyChecking=no"
 optKey="-i ~/.ssh/id_dsa.pub"
 
-sshCopy="$passCommand ssh-copy-id $optHostCheck $optKey $server"
+sshCopy="echo \"Starts\" "
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
