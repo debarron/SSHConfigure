@@ -28,11 +28,6 @@ scriptUsage(){
 	echo "	With \"nm\" as Namenode and cp-1, cp-2, cp-3 as Datanodes"
 }
 
-if [ $# -ne 2 ]
-then
-	scriptUsage
-	exit 1
-fi
 
 nodePrefix=`echo $1 | cut -d, -f1`
 startNode=`echo $1 | cut -d, -f2`
