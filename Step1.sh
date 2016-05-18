@@ -45,7 +45,7 @@ ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.s
 # ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@nm && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-1 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-2 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-3
 
 # Don't touch this parameters
-passCommand="sudo sshpass -p \"$password\""
+passCommand="sshpass -p \"$password\""
 optHostCheck="-o StrictHostKeyChecking=no"
 optKey="-i ~/.ssh/id_dsa.pub"
 

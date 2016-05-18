@@ -44,7 +44,7 @@ printf "\n>> Configuring the master node STARTS\n"
 ./Step1.sh "$serverName" "$nodePrefix,$startNode,$lastNode" "$user,$password"
 printf "\n>>  Configuring the master node DONE\n\n"
 
-passCommand="sudo sshpass -p \"$password\""
+passCommand="sshpass -p \"$password\""
 optHostCheck="-o StrictHostKeyChecking=no"
 optKey="-i ~/.ssh/id_dsa.pub"
 
