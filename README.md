@@ -15,6 +15,11 @@ The user need to change the PARAMS section in both scripts. This parameters incl
 
 
 ```shell
-$ ./Master.sh
+$ ./Master.sh NameNode DataNodePrefix,Start,End User,Password
 ```
 
+
+```shell
+Ex.
+$ ./Master.sh hadoopnamenode hdatanode-,1,16 jdoe,hadoop123
+```
