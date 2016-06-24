@@ -14,7 +14,7 @@
 
 #UPDATED
 scriptUsage(){
-	echo "USAGE: Step1.sh <server> <nodePrefix,start,end> <user,password>"
+	echo "USAGE: Step1.sh <server> <nodePrefix,start,end> <user,password> <source>"
 	echo "	+ server: Indicates the name of the server node (i.e. Hadoop's Namenode)"
 	echo "	+ nodePrefix: Corresponds with the prefix of the cluster's Datanodes"
 	echo "	+ startNode: First datanode, naming must follow a sequential convention"
@@ -22,7 +22,7 @@ scriptUsage(){
 	echo "	+ user: User that will manage the cluster"
 	echo "	+ password: User's password"
 	echo "	"
-	echo "	"
+	echo "	Edit the source file previous to run the Master.sh script"
 	echo "	Example: Master.sh nm cp-,1,3 doe,userpass"
 	echo "	Will configure the cluster as user \"doe\" with password \"userpass\""
 	echo "	With \"nm\" as Namenode and cp-1, cp-2, cp-3 as Datanodes"
@@ -78,4 +78,6 @@ done
 eval $sshCopy
 echo ">> Generating keys FINISHED"
 echo ">> GO AND CONFIGURE THE NODES ...."
+
+./Step2.sh $1 $2 $3
 
