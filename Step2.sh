@@ -68,10 +68,9 @@ echo "Downlonding: $downloadMN"
 echo "Downlonding: $downloadDN"
 echo " "
 echo " "
-# eval $downloadMN
-# eval $downloadDN
-echo $downloadMN
-echo $downloadDN
+eval $downloadMN
+eval $downloadDN
+
 
 # UnTAR
 untarDN="tar -xvzf $outDN"
@@ -79,10 +78,8 @@ untarMN="tar -xvzf $outMN"
 echo "### UnTAR the files"
 echo "UnTARing: $untarDN"
 echo "UnTARing: $untarMN"
-# eval $untarMN
-# eval $untarDN
-echo $untarMN
-echo $untarDN
+eval $untarMN
+eval $untarDN
 echo " "
 echo " "
 
@@ -93,10 +90,8 @@ removeMNT="rm $outMN"
 echo "### Removing the TAR files"
 echo "Removing: $removeMNT "
 echo "Removing: $removeDNT "
-# eval $removeMNT
-# eval $removeDNT
-echo $removeMNT
-echo $removeDNT
+eval $removeMNT
+eval $removeDNT
 echo " "
 echo " "
 
