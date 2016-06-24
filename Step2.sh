@@ -60,7 +60,7 @@ echo "Scala Version: $scv"
 echo " "
 echo " "
 
-Download the tar files for master and datanode
+#Download the tar files for master and datanode
 downloadDN="wget -c $dn -O $outDN"
 downloadMN="wget -c $mn -O $outMN"
 echo "### Downloading "
@@ -185,9 +185,9 @@ do
 	echo "ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'"
 
 	scp -r datanode $nodePrefix$node:~
-	ssh $nodePrefix$node 'cd ~/datanode/ && sudo mv spark $sysDir && sudo mv scala $sysDir && sudo mv hadoop $sysDir'
-	ssh $nodePrefix$node 'sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/scala'
-	ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'
+	ssh $nodePrefix$node 'cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local'
+	ssh $nodePrefix$node 'sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala'
+	ssh $nodePrefix$node 'mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc'
 	ssh $nodePrefix$node 'rm -Rf ~/datanode'
 done
 
