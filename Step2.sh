@@ -145,7 +145,7 @@ echo " "
 echo "### Moving the files to $sysDir"
 # Move the directories for the master
 location="masternode"
-moveCmd="sudo mv $location/spark $sysDir && sudo mv $location/scala $sysDir && sudo mv $location/hadoop $sysDir"
+moveCmd="sudo cp $location/spark $sysDir && sudo cp $location/scala $sysDir && sudo cp $location/hadoop $sysDir"
 ownerCmd="sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/scala"
 bashCmd="mv $location/bashrc.templete ~/.bashrc && source ~/.bashrc"
 
@@ -190,10 +190,15 @@ do
 	echo "ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'"
 
 	scp -r datanode $nodePrefix$node:~
-	ssh $nodePrefix$node 'cd datanode/ && sudo mv spark $sysDir && sudo mv scala $sysDir && sudo mv hadoop $sysDir'
+	ssh $nodePrefix$node 'cd ~/datanode/ && sudo mv spark $sysDir && sudo mv scala $sysDir && sudo mv hadoop $sysDir'
 	ssh $nodePrefix$node 'sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/scala'
 	ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'
+	ssh $nodePrefix$node 'rm -Rf ~/datanode'
 done
+
+echo "### Deleting masternode and datanode"
+rm -Rf masternode
+rm -Rf datanode
 
 
 
