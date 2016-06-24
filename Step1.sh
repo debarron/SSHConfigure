@@ -79,5 +79,4 @@ eval $sshCopy
 echo ">> Generating keys FINISHED"
 echo ">> GO AND CONFIGURE THE NODES ...."
 
-./Step2.sh $1 $2 $3
 

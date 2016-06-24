@@ -75,3 +75,6 @@ do
 done
 echo ">> Executing the script in the nodes DONE"
 echo " "
+
+
+./Step2.sh $1 $2 $3
