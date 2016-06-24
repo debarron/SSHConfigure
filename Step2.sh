@@ -21,10 +21,6 @@ hadoopCoreSite="$hadoopDir/core-site.xml"
 hadoopYarnSite="$hadoopDir/yarn-site.xml"
 hadoopMasters="$hadoopDir/masters"
 
-sysDir="/usr/local"
-patternCoreSite="sed -e 's/.*<value>hdfs\([^<]*\)<\/value>.*/<value>hdfs\:\/\/$masterNetworkName<\/value>/g' "
-patternYarnSite="sed -e 's/.*<value>nm\([^<]*\)<\/value>.*/<value>$masterNetworkName<\/value>/g' "
-
 # Read the config file
 while read -r line
 do
@@ -59,6 +55,11 @@ echo "Hadoop Version: $hv"
 echo "Scala Version: $scv"
 echo " "
 echo " "
+
+sysDir="/usr/local"
+patternCoreSite="sed -e 's/.*<value>hdfs\([^<]*\)<\/value>.*/<value>hdfs\:\/\/$masterNetworkName<\/value>/g' "
+patternYarnSite="sed -e 's/.*<value>nm\([^<]*\)<\/value>.*/<value>$masterNetworkName<\/value>/g' "
+
 
 #Download the tar files for master and datanode
 downloadDN="wget -c $dn -O $outDN"
