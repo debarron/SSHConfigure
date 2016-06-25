@@ -61,66 +61,45 @@ patternCoreSite="sed -e 's/.*<value>hdfs\([^<]*\)<\/value>.*/<value>hdfs\:\/\/$m
 patternYarnSite="sed -e 's/.*<value>nm\([^<]*\)<\/value>.*/<value>$masterNetworkName<\/value>/g' "
 
 
-# #Download the tar files for master and datanode
-# downloadDN="wget -c $dn -O $outDN"
-# downloadMN="wget -c $mn -O $outMN"
-# echo "### Downloading "
-# echo "Downlonding: $downloadMN"
-# echo "Downlonding: $downloadDN"
-# echo " "
-# eval $downloadMN
-# eval $downloadDN
+#Download the tar files for master and datanode
+downloadDN="wget -c $dn -O $outDN"
+downloadMN="wget -c $mn -O $outMN"
+echo "### Downloading "
+echo "Downlonding: $downloadMN"
+echo "Downlonding: $downloadDN"
+echo " "
+eval $downloadMN
+eval $downloadDN
 
 
-# # UnTAR
-# untarDN="tar -xzf $outDN"
-# untarMN="tar -xzf $outMN"
-# echo "### UnTAR the files"
-# echo "UnTARing: $untarDN"
-# echo "UnTARing: $untarMN"
-# eval $untarMN
-# eval $untarDN
-# echo " "
+# UnTAR
+untarDN="tar -xzf $outDN"
+untarMN="tar -xzf $outMN"
+echo "### UnTAR the files"
+echo "UnTARing: $untarDN"
+echo "UnTARing: $untarMN"
+eval $untarMN
+eval $untarDN
+echo " "
 
-# # Remove tars
-# removeDNT="rm $outDN"
-# removeMNT="rm $outMN"
-# echo "### Removing the TAR files"
-# echo "Removing: $removeMNT "
-# echo "Removing: $removeDNT "
-# eval $removeMNT
-# eval $removeDNT
-# echo " "
+# Remove tars
+removeDNT="rm $outDN"
+removeMNT="rm $outMN"
+echo "### Removing the TAR files"
+echo "Removing: $removeMNT "
+echo "Removing: $removeDNT "
+eval $removeMNT
+eval $removeDNT
+echo " "
 
 
 # Change the values for the master
-echo "### Applying sed to the configuration files"
+echo "### Editin the core-site.xml yarn-site.xml, masters and slaves files "
 location="masternode"
 temCS="$location/$hadoopDir/core-site.xml.temp"
 temYS="$location/$hadoopDir/yarn-site.xml.temp"
-
-echo "### Editin the core-site.xml file "
-coreSiteCmd="$patternCoreSite $location/$hadoopCoreSite > $temCS"
-moveCS="mv $temCS $location/$hadoopCoreSite"
-
-eval $coreSiteCmd
-eval $moveCS
-echo " "
-
-echo "### Editing the yarn-site.xml file "
-yarnSiteCmd="$patternYarnSite $location/$hadoopYarnSite > $temYS"
-moveYS="mv $temYS $location/$hadoopYarnSite"
-
-eval $yarnSiteCmd
-eval $moveYS
-echo " "
-
-echo "### Editing the masters file"
-cmd="echo $serverName > $location/$hadoopMasters"
-eval $cmd
-
-echo "### Editing the slaves file"
 slaves="$location/$hadoopDir/slaves"
+
 echo " " > $slaves
 for node in `seq $startNode $lastNode`;
 do
@@ -128,20 +107,23 @@ do
 done
 echo " "
 
-echo "### Replicating the changes to masternode"
-cmd="cp $slaves masternode/spark/conf/"
+coreSiteCmd="$patternCoreSite $location/$hadoopCoreSite > $temCS"
+yarnSiteCmd="$patternYarnSite $location/$hadoopYarnSite > $temYS"
+cmd="mv $temCS $location/$hadoopCoreSite && mv $temYS $location/$hadoopYarnSite && "
+cmd="$cmd echo $serverName > $location/$hadoopMasters && "
+cmd="$cmd cp $slaves $location/$sparkDir/"
+
+eval $coreSiteCmd
+eval $yarnSiteCmd
 eval $cmd
 echo " "
 
-echo "### Moving the files to $sysDir"
-location="masternode"
-moveCmd="sudo cp -r $location/spark $sysDir/ && sudo cp -r $location/scala $sysDir/ && sudo cp -r $location/hadoop $sysDir/"
-ownerCmd="sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/scala"
-bashCmd="mv $location/bashrc.templete ~/.bashrc && source ~/.bashrc"
 
-eval $moveCmd
-eval $ownerCmd
-eval $bashCmd
+echo "### Moving the files to $sysDir"
+cmd="sudo cp -r $location/spark $sysDir/ && sudo cp -r $location/scala $sysDir/ && sudo cp -r $location/hadoop $sysDir/ && "
+cmd="$cmd sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/scala && "
+cmd="$cmd mv $location/bashrc.templete ~/.bashrc && source ~/.bashrc"
+eval $cmd
 
 echo "### Masternode's files configured "
 echo " "
@@ -156,52 +138,20 @@ cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite && "
 cmd="$cmd cp $origin/$hadoopYarnSite $location/$hadoopYarnSite && "
 cmd="$cmd cp $slaves $location/$sparkDir/slaves && "
 cmd="$cmd cp $slaves $location/$hadoopDir/slaves && "
-cmd="$cmd cp $origin/$masters $location/$masters"
-echo $cmd
-exit 1
+cmd="$cmd cp $origin/$hadoopMasters $location/$hadoopMasters"
 eval $cmd
 echo " "
-
-
-
-# echo "### Replicating the changes to datanode"
-# location="datanode"
-# origin="masternode"
-# echo "### Copying core-site.xml "
-# cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite"
-# eval $cmd
-# echo " "
-
-# echo "### Copying yarn-site.xml "
-# cmd="cp $origin/$hadoopYarnSite $location/$hadoopYarnSite"
-# eval $cmd
-# echo " "
-
-# echo "### Copying hadoop's slaves "
-# cmd="cp $slaves $location/$sparkDir/slaves"
-# eval $cmd
-# echo " "
-
-# echo "### Copying spark's slaves "
-# cmd="cp $slaves $location/$hadoopDir/slaves"
-# eval $cmd
-# echo " "
-
-# echo "### Copying spark's slaves "
-# cmd="cp $origin/masters $location/$masters"
-# eval $cmd
-# echo " "
 
 # Iterate to the datanodes
 for node in `seq $startNode $lastNode`;
 do
 	echo "	### Accesing node $nodePrefix$node"
-
 	cmd="scp -qr datanode $nodePrefix$node:~ && ssh $nodePrefix$node '"
 	cmd="$cmd cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local && "
 	cmd="$cmd sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala && "
 	cmd="$cmd mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc && rm -Rf ~/datanode'"
 	eval $cmd
+
 done
 
 echo "### Deleting masternode and datanode"
