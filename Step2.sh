@@ -140,7 +140,7 @@ echo " "
 
 echo "### Moving the files to $sysDir"
 location="masternode"
-moveCmd="sudo cp $location/spark $sysDir/ && sudo cp $location/scala $sysDir/ && sudo cp $location/hadoop $sysDir/"
+moveCmd="sudo cp -r $location/spark $sysDir/ && sudo cp -r $location/scala $sysDir/ && sudo cp -r $location/hadoop $sysDir/"
 ownerCmd="sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/scala"
 bashCmd="mv $location/bashrc.templete ~/.bashrc && source ~/.bashrc"
 
