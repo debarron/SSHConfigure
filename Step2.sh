@@ -61,36 +61,36 @@ patternCoreSite="sed -e 's/.*<value>hdfs\([^<]*\)<\/value>.*/<value>hdfs\:\/\/$m
 patternYarnSite="sed -e 's/.*<value>nm\([^<]*\)<\/value>.*/<value>$masterNetworkName<\/value>/g' "
 
 
-#Download the tar files for master and datanode
-downloadDN="wget -c $dn -O $outDN"
-downloadMN="wget -c $mn -O $outMN"
-echo "### Downloading "
-echo "Downlonding: $downloadMN"
-echo "Downlonding: $downloadDN"
-echo " "
-eval $downloadMN
-eval $downloadDN
+# #Download the tar files for master and datanode
+# downloadDN="wget -c $dn -O $outDN"
+# downloadMN="wget -c $mn -O $outMN"
+# echo "### Downloading "
+# echo "Downlonding: $downloadMN"
+# echo "Downlonding: $downloadDN"
+# echo " "
+# eval $downloadMN
+# eval $downloadDN
 
 
-# UnTAR
-untarDN="tar -xzf $outDN"
-untarMN="tar -xzf $outMN"
-echo "### UnTAR the files"
-echo "UnTARing: $untarDN"
-echo "UnTARing: $untarMN"
-eval $untarMN
-eval $untarDN
-echo " "
+# # UnTAR
+# untarDN="tar -xzf $outDN"
+# untarMN="tar -xzf $outMN"
+# echo "### UnTAR the files"
+# echo "UnTARing: $untarDN"
+# echo "UnTARing: $untarMN"
+# eval $untarMN
+# eval $untarDN
+# echo " "
 
-# Remove tars
-removeDNT="rm $outDN"
-removeMNT="rm $outMN"
-echo "### Removing the TAR files"
-echo "Removing: $removeMNT "
-echo "Removing: $removeDNT "
-eval $removeMNT
-eval $removeDNT
-echo " "
+# # Remove tars
+# removeDNT="rm $outDN"
+# removeMNT="rm $outMN"
+# echo "### Removing the TAR files"
+# echo "Removing: $removeMNT "
+# echo "Removing: $removeDNT "
+# eval $removeMNT
+# eval $removeDNT
+# echo " "
 
 
 # Change the values for the master
@@ -157,6 +157,8 @@ cmd="$cmd cp $origin/$hadoopYarnSite $location/$hadoopYarnSite && "
 cmd="$cmd cp $slaves $location/$sparkDir/slaves && "
 cmd="$cmd cp $slaves $location/$hadoopDir/slaves && "
 cmd="$cmd cp $origin/$masters $location/$masters"
+echo $cmd
+exit 1
 eval $cmd
 echo " "
 
