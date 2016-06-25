@@ -141,7 +141,7 @@ echo " "
 echo "### Moving the files to $sysDir"
 # Move the directories for the master
 location="masternode"
-moveCmd="sudo cp $location/spark $sysDir && sudo cp $location/scala $sysDir && sudo cp $location/hadoop $sysDir"
+moveCmd="sudo cp $location/spark $sysDir/ && sudo cp $location/scala $sysDir/ && sudo cp $location/hadoop $sysDir/"
 ownerCmd="sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/scala"
 bashCmd="mv $location/bashrc.templete ~/.bashrc && source ~/.bashrc"
 
@@ -180,7 +180,7 @@ echo " "
 # Iterate to the datanodes
 for node in `seq $startNode $lastNode`;
 do
-	echo "scp -r datanode $nodePrefix$node:~"
+	echo "scp -q -r datanode $nodePrefix$node:~"
 	echo "ssh $nodePrefix$node 'cd datanode/ && sudo mv spark $sysDir && sudo mv scala $sysDir && sudo mv hadoop $sysDir"
 	echo "ssh $nodePrefix$node 'sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/scala"
 	echo "ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'"

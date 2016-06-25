@@ -3,4 +3,4 @@ masternode=https://dl.dropboxusercontent.com/u/59710584/ClusterHS/masternode.tar
 sparkVersion=1.3.0
 hadoopVersion=2.6.0
 scalaVersion=2.10.0
-masternodeNetworkName=something
+masterNetworkName=something
