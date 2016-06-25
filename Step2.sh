@@ -68,7 +68,6 @@ echo "### Downloading "
 echo "Downlonding: $downloadMN"
 echo "Downlonding: $downloadDN"
 echo " "
-echo " "
 eval $downloadMN
 eval $downloadDN
 
@@ -82,8 +81,6 @@ echo "UnTARing: $untarMN"
 eval $untarMN
 eval $untarDN
 echo " "
-echo " "
-
 
 # Remove tars
 removeDNT="rm $outDN"
@@ -94,7 +91,6 @@ echo "Removing: $removeDNT "
 eval $removeMNT
 eval $removeDNT
 echo " "
-echo " "
 
 
 # Change the values for the master
@@ -102,7 +98,6 @@ echo "### Applying sed to the configuration files"
 location="masternode"
 temCS="$location/$hadoopDir/core-site.xml.temp"
 temYS="$location/$hadoopDir/yarn-site.xml.temp"
-echo " "
 
 echo "### Editin the core-site.xml file "
 coreSiteCmd="$patternCoreSite $location/$hadoopCoreSite > $temCS"
@@ -122,7 +117,7 @@ echo " "
 
 echo "### Editing the masters file"
 cmd="echo $serverName > $location/$hadoopMasters"
-echo " "
+eval $cmd
 
 echo "### Editing the slaves file"
 slaves="$location/$hadoopDir/slaves"
@@ -156,49 +151,60 @@ echo " "
 echo "### Replicating the changes to datanode"
 location="datanode"
 origin="masternode"
-echo "### Copying core-site.xml "
-cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite"
+echo "### Copying core-site.xml yarn-site.xml hadoop's slaves spark's slaves spark's slaves "
+cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite && "
+cmd="$cmd cp $origin/$hadoopYarnSite $location/$hadoopYarnSite && "
+cmd="$cmd cp $slaves $location/$sparkDir/slaves && "
+cmd="$cmd cp $slaves $location/$hadoopDir/slaves && "
+cmd="$cmd cp $origin/masters $location/$masters"
 eval $cmd
 echo " "
 
-echo "### Copying yarn-site.xml "
-cmd="cp $origin/$hadoopYarnSite $location/$hadoopYarnSite"
-eval $cmd
-echo " "
 
-echo "### Copying hadoop's slaves "
-cmd="cp $slaves $location/$sparkDir/slaves"
-eval $cmd
-echo " "
 
-echo "### Copying spark's slaves "
-cmd="cp $slaves $location/$hadoopDir/slaves"
-eval $cmd
-echo " "
+# echo "### Replicating the changes to datanode"
+# location="datanode"
+# origin="masternode"
+# echo "### Copying core-site.xml "
+# cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite"
+# eval $cmd
+# echo " "
+
+# echo "### Copying yarn-site.xml "
+# cmd="cp $origin/$hadoopYarnSite $location/$hadoopYarnSite"
+# eval $cmd
+# echo " "
+
+# echo "### Copying hadoop's slaves "
+# cmd="cp $slaves $location/$sparkDir/slaves"
+# eval $cmd
+# echo " "
+
+# echo "### Copying spark's slaves "
+# cmd="cp $slaves $location/$hadoopDir/slaves"
+# eval $cmd
+# echo " "
+
+# echo "### Copying spark's slaves "
+# cmd="cp $origin/masters $location/$masters"
+# eval $cmd
+# echo " "
 
 # Iterate to the datanodes
 for node in `seq $startNode $lastNode`;
 do
-	echo "scp -qr datanode $nodePrefix$node:~"
-	echo "ssh $nodePrefix$node 'cd datanode/ && sudo mv spark $sysDir && sudo mv scala $sysDir && sudo mv hadoop $sysDir"
-	echo "ssh $nodePrefix$node 'sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/scala"
-	echo "ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'"
+	echo "	### Accesing node $nodePrefix$node"
 
-	cmd="scp -qr datanode $nodePrefix$node:~"
-	eval $cmd
-	cmd="ssh $nodePrefix$node 'cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local'"
-	eval $cmd
-	cmd="ssh $nodePrefix$node 'sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala'"
-	eval $cmd
-	cmd="ssh $nodePrefix$node 'mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc'"
-	eval $cmd
-	cmd="ssh $nodePrefix$node 'rm -Rf ~/datanode'"
+	cmd="scp -qr datanode $nodePrefix$node:~ && ssh $nodePrefix$node '"
+	cmd="$cmd cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local && "
+	cmd="$cmd sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala && "
+	cmd="$cmd mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc && rm -Rf ~/datanode'"
 	eval $cmd
 done
 
 echo "### Deleting masternode and datanode"
-# rm -Rf masternode
-# rm -Rf datanode
+rm -Rf masternode
+rm -Rf datanode
 
 
 
