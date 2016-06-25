@@ -184,11 +184,16 @@ do
 	echo "ssh $nodePrefix$node 'sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/scala"
 	echo "ssh $nodePrefix$node 'mv bashrc.templete ~/.bashrc && source ~/.bashrc'"
 
-	scp -r datanode $nodePrefix$node:~
-	ssh $nodePrefix$node 'cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local'
-	ssh $nodePrefix$node 'sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala'
-	ssh $nodePrefix$node 'mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc'
-	ssh $nodePrefix$node 'rm -Rf ~/datanode'
+	cmd="scp -qr datanode $nodePrefix$node:~"
+	eval $cmd
+	cmd="ssh $nodePrefix$node 'cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local'"
+	eval $cmd
+	cmd="ssh $nodePrefix$node 'sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala'"
+	eval $cmd
+	cmd="ssh $nodePrefix$node 'mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc'"
+	eval $cmd
+	cmd="ssh $nodePrefix$node 'rm -Rf ~/datanode'"
+	eval $cmd
 done
 
 echo "### Deleting masternode and datanode"
