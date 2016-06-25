@@ -94,12 +94,15 @@ echo " "
 
 
 # Change the values for the master
-echo "### Editin the core-site.xml yarn-site.xml, masters and slaves files "
 location="masternode"
 temCS="$location/$hadoopDir/core-site.xml.temp"
 temYS="$location/$hadoopDir/yarn-site.xml.temp"
 slaves="$location/$hadoopDir/slaves"
-
+echo "### Editin files"
+echo "Editing: core-site.xml"
+echo "Editing: yarn-site.xml"
+echo "Editing: masters"
+echo "Editing: slaves "
 echo " " > $slaves
 for node in `seq $startNode $lastNode`;
 do
@@ -118,22 +121,23 @@ eval $yarnSiteCmd
 eval $cmd
 echo " "
 
-
-echo "### Moving the files to $sysDir"
 cmd="sudo cp -r $location/spark $sysDir/ && sudo cp -r $location/scala $sysDir/ && sudo cp -r $location/hadoop $sysDir/ && "
 cmd="$cmd sudo chown $user -R $sysDir/spark && sudo chown $user -R $sysDir/hadoop && sudo chown $user -R $sysDir/scala && "
 cmd="$cmd mv $location/bashrc.templete ~/.bashrc && source ~/.bashrc"
+echo "### Moving the files to $sysDir"
 eval $cmd
-
 echo "### Masternode's files configured "
 echo " "
 echo " "
 
 
-echo "### Replicating the changes to datanode"
 location="datanode"
 origin="masternode"
-echo "### Copying core-site.xml yarn-site.xml hadoop's slaves spark's slaves spark's slaves "
+echo "### Replicating the changes to datanode"
+echo "Copying: core-site.xml"
+echo "Copying: yarn-site.xml"
+echo "Copying: slaves"
+echo "Copying: masters"
 cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite && "
 cmd="$cmd cp $origin/$hadoopYarnSite $location/$hadoopYarnSite && "
 cmd="$cmd cp $slaves $location/$sparkDir/slaves && "
@@ -142,19 +146,22 @@ cmd="$cmd cp $origin/$hadoopMasters $location/$hadoopMasters"
 eval $cmd
 echo " "
 
-# Iterate to the datanodes
+echo "### Configuring remote nodes"
 for node in `seq $startNode $lastNode`;
 do
-	echo "	### Accesing node $nodePrefix$node"
+	echo "Accesing: $nodePrefix$node"
 	cmd="scp -qr datanode $nodePrefix$node:~ && ssh $nodePrefix$node '"
 	cmd="$cmd cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local && "
 	cmd="$cmd sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala && "
 	cmd="$cmd mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc && rm -Rf ~/datanode'"
 	eval $cmd
+	echo " "
 
 done
 
-echo "### Deleting masternode and datanode"
+echo "### Deleting files"
+echo "Deleting: masternode "
+echo "Deleting: datanode"
 rm -Rf masternode
 rm -Rf datanode
 
