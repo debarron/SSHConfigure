@@ -156,7 +156,7 @@ cmd="cp $origin/$hadoopCoreSite $location/$hadoopCoreSite && "
 cmd="$cmd cp $origin/$hadoopYarnSite $location/$hadoopYarnSite && "
 cmd="$cmd cp $slaves $location/$sparkDir/slaves && "
 cmd="$cmd cp $slaves $location/$hadoopDir/slaves && "
-cmd="$cmd cp $origin/masters $location/$masters"
+cmd="$cmd cp $origin/$masters $location/$masters"
 eval $cmd
 echo " "
 
