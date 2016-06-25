@@ -155,7 +155,6 @@ do
 	cmd="$cmd sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala && "
 	cmd="$cmd mv ~/datanode/bashrc.templete ~/.bashrc && source ~/.bashrc && rm -Rf ~/datanode'"
 	eval $cmd
-	echo " "
 
 done
 
