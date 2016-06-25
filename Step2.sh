@@ -74,8 +74,8 @@ eval $downloadDN
 
 
 # UnTAR
-untarDN="tar -xvzf $outDN"
-untarMN="tar -xvzf $outMN"
+untarDN="tar -xzf $outDN"
+untarMN="tar -xzf $outMN"
 echo "### UnTAR the files"
 echo "UnTARing: $untarDN"
 echo "UnTARing: $untarMN"
