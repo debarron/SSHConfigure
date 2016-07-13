@@ -12,8 +12,11 @@ user=`echo $3 | cut -d, -f1`
 password=`echo $3 | cut -d, -f2`
 src=sources
 
-outDN="datanode.tar.gz"
-outMN="masternode.tar.gz"
+DN="datanode"
+MN="masternode"
+
+outDN="$DN.tar.gz"
+outMN="$MN.tar.gz"
 
 hadoopDir="/hadoop/etc/hadoop/"
 sparkDir="/spark/conf/"
@@ -73,8 +76,8 @@ eval $downloadDN
 
 
 # UnTAR
-untarDN="tar -xzf $outDN"
-untarMN="tar -xzf $outMN"
+untarDN="tar -xzf $outDN -C ./$DN"
+untarMN="tar -xzf $outMN -C ./MN"
 echo "### UnTAR the files"
 echo "UnTARing: $untarDN"
 echo "UnTARing: $untarMN"
