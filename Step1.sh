@@ -41,24 +41,23 @@ sudo apt-get -y update  && sudo apt-get -y install default-jdk ssh rsync sshpass
 printf ">> System update FINISHED\n\n"
 
 printf "\n>> Generating keys STARTS\n"
-echo -e 'y\n'|ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && 
-cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys 
-# ssh-keygen -t dsa -P '' -N ' ' -f ~/.ssh/id_dsa && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@nm && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-1 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-2 && sudo ssh-copy-id -i ~/.ssh/id_dsa.pub dl544@cp-3
+echo -e 'y\n'|ssh-keygen -t dsa -P "" -f ~/.ssh/id_rsa 
 
-# Don't touch this parameters
-passCommand="sshpass -p \"$password\""
-optHostCheck="-o StrictHostKeyChecking=no"
-optKey="-i ~/.ssh/id_dsa.pub"
+password="sshpass -p \"$password\""
+hostValidation="-o StrictHostKeyChecking=no"
+sshkeyFile="~/.ssh/id_rsa.pub"
 
-sshCopy="echo \"Starts\" "
-sshCopy="$passCommand ssh-copy-id $optHostCheck $optKey $user@$serverName"
+
+cmd="$password ssh-copy-id $optHostCheck -i $sshkeyFile $user@$serverName"
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
-	nextNode="&& $passCommand ssh-copy-id $optHostCheck $optKey $server"
-	sshCopy="$sshCopy $nextNode"
+	nextCmd="$password ssh-copy-id $optHostCheck $sshkeyFile $server"
+	cmd="$cmd $nextNode"
 done
-eval $sshCopy
+
+echo $cmd
+#eval $cmd
 printf "\n>> Generating keys FINISHED"
 
 
