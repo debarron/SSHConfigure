@@ -41,22 +41,26 @@ sudo apt-get -y update  && sudo apt-get -y install default-jdk ssh rsync sshpass
 printf ">> System update FINISHED\n\n"
 
 printf "\n>> Generating keys STARTS\n"
-echo -e 'y\n'|ssh-keygen -t dsa -P "" -f ~/.ssh/id_rsa 
+echo -e 'y\n'|ssh-keygen -t dsa -f ~/.ssh/id_rsa 
+
+
 
 password="sshpass -p \"$password\""
-hostValidation="-o StrictHostKeyChecking=no"
 sshkeyFile="~/.ssh/id_rsa.pub"
+cmd="$password ssh-copy-id -i $sshkeyFile $user@$serverName"
+eval $cmd
 
-
-cmd="$password ssh-copy-id $optHostCheck -i $sshkeyFile $user@$serverName"
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
-	nextCmd="$password ssh-copy-id $optHostCheck $sshkeyFile $server"
-	cmd="$cmd $nextNode"
+	cmd="$password ssh-copy-id -i $sshkeyFile $server"
+	
+	echo "Sending keys to: $server"
+	eval $cmd
 done
 
-echo $cmd
+chmod 0600 ~/.ssh/authorized_keys 
+
 #eval $cmd
 printf "\n>> Generating keys FINISHED"
 
