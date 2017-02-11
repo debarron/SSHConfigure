@@ -162,7 +162,7 @@ do
 
 done
 
-source ~/.bashrc
+echo ' ' >> ~/.bashrc && echo 'export JAVA_HOME=/usr/lib/jvm/default-java/' >> ~/.bashrc && source ~/.bashrc 
 
 echo "### Deleting files"
 echo "Deleting: masternode "
