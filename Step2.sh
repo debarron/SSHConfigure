@@ -161,6 +161,8 @@ do
 
 done
 
+source ~/.bashrc
+
 echo "### Deleting files"
 echo "Deleting: masternode "
 echo "Deleting: datanode"

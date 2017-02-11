@@ -41,7 +41,7 @@ sudo apt-get -y update  && sudo apt-get -y install default-jdk ssh rsync sshpass
 printf ">> System update FINISHED\n\n"
 
 printf "\n>> Generating keys STARTS\n"
-echo -e 'y\n'|ssh-keygen -t dsa -f ~/.ssh/id_rsa 
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa 
 
 
 
