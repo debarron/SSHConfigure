@@ -40,11 +40,11 @@ lastNode=`echo $2 | cut -d, -f3`
 user=`echo $3 | cut -d, -f1`
 password=`echo $3 | cut -d, -f2`
 
-printf "\n>> Installing SBT in the master node\n"
+echo ">> Installing SBT in the master node\n"
 echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
 
-printf "\n>> Configuring the master node STARTS\n"
+echo ">> Configuring the master node STARTS\n"
 ./Step1.sh "$serverName" "$nodePrefix,$startNode,$lastNode" "$user,$password"
 sudo apt-get install sbt
 printf "\n>>  Configuring the master node DONE\n\n"

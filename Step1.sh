@@ -37,23 +37,25 @@ password=`echo $3 | cut -d, -f2`
 
 
 printf "\n>> Script to initialize a node\n ##----------------------------\n >> System update STARTS\n"
-sudo apt-get -y update  && sudo apt-get -y install default-jdk ssh rsync sshpass && update-alternatives --config java 
+sudo apt-get -y update
+sudo apt-get -y install default-jdk ssh rsync sshpass
+update-alternatives --config java 
+
 printf ">> System update FINISHED\n\n"
 
 printf "\n>> Generating keys STARTS\n"
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa 
 
-
-
-password="sshpass -p \"$password\""
+passwordCmd="sshpass -p \"$password\""
 sshkeyFile="~/.ssh/id_rsa.pub"
-cmd="$password ssh-copy-id -i $sshkeyFile $user@$serverName"
+
+cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $user@$serverName"
 eval $cmd
 
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
-	cmd="$password ssh-copy-id -i $sshkeyFile $server"
+	cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $server"
 	
 	echo "Sending keys to: $server"
 	eval $cmd

@@ -157,7 +157,7 @@ do
 	cmd="$cmd cd ~/datanode/ && sudo mv spark /usr/local && sudo mv scala /usr/local && sudo mv hadoop /usr/local && "
 	cmd="$cmd sudo chown $user -R /usr/local/hadoop && sudo chown $user -R /usr/local/spark && sudo chown $user -R /usr/local/scala && "
 	cmd="$cmd mv ~/datanode/bashrc.templete ~/.bashrc && "
-	cmd="$cmd echo ' ' >> ~/.bashrc && echo 'export JAVA_HOME=/usr/lib/jvm/default-java/' >> ~/.bashrc && source ~/.bashrc && rm -Rf ~/datanode'"
+	cmd="$cmd echo \"" \"" >> ~/.bashrc && echo \"export JAVA_HOME=/usr/lib/jvm/default-java/\" >> ~/.bashrc && source ~/.bashrc && rm -Rf ~/datanode'"
 	eval $cmd
 
 done
