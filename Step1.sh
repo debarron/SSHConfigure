@@ -47,9 +47,10 @@ printf "\n>> Generating keys STARTS\n"
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa 
 
 passwordCmd="sshpass -p \"$password\""
+optHostCheck="StrictHostKeyChecking=no"
 sshkeyFile="~/.ssh/id_rsa.pub"
 
-cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $user@$serverName"
+cmd="$passwordCmd ssh-copy-id -o $optHostCheck -i $sshkeyFile $user@$serverName"
 eval $cmd
 chmod 0600 ~/.ssh/authorized_keys 
 
@@ -58,7 +59,7 @@ echo ">> Copying $sshkeyFile to $serverName"
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
-	cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $server"
+	cmd="$passwordCmd ssh-copy-id -o $optHostCheck -i $sshkeyFile $server"
 	echo "Sending keys to: $server"
 	eval $cmd
 
