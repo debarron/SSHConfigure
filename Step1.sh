@@ -51,18 +51,21 @@ sshkeyFile="~/.ssh/id_rsa.pub"
 
 cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $user@$serverName"
 eval $cmd
+chmod 0600 ~/.ssh/authorized_keys 
+
+echo ">> Copying $sshkeyFile to $serverName"
 
 for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
 	cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $server"
 	echo "Sending keys to: $server"
-	eval $cmd &
+	eval $cmd
 
-	wait 1%
+	echo "## >> Running $cmd"
 done
 
-chmod 0600 ~/.ssh/authorized_keys 
+
 
 #eval $cmd
 printf "\n>> Generating keys FINISHED"
