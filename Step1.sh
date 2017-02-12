@@ -44,7 +44,7 @@ update-alternatives --config java
 printf ">> System update FINISHED\n\n"
 
 printf "\n>> Generating keys STARTS\n"
-ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa 
+ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa 
 
 passwordCmd="sshpass -p \"$password\""
 sshkeyFile="~/.ssh/id_rsa.pub"
