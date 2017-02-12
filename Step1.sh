@@ -56,9 +56,10 @@ for node in `seq $startNode $lastNode`;
 do
 	server="$user@$nodePrefix$node"
 	cmd="$passwordCmd ssh-copy-id -i $sshkeyFile $server"
-	
 	echo "Sending keys to: $server"
-	eval $cmd
+	eval $cmd &
+
+	wait 1%
 done
 
 chmod 0600 ~/.ssh/authorized_keys 
